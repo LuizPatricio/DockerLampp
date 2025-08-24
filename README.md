@@ -23,3 +23,12 @@ Conectar ao banco de dados mysql pela container
 
 comando de logon do mysql
 # mysql -uroot -p
+
+Ver os Databases
+# show databases;
+
+Selecionar uma base de dados
+# use mysql;
+
+Ver usuários do banco
+# SELECT user, host, plugin FROM mysql.user;
