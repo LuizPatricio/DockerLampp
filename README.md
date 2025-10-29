@@ -11,12 +11,12 @@ Acesso ao Banco de dados:
 Comandos para executar o docker compose:
 
 Subindo o docker
-# docker compose -f "docker-compose.yml" up -d --build 
+# docker compose up -d
 ou 
 # docker compose -f "docker-compose.yml" up -d
 
 Parando o docker
-# docker compose -f "docker-compose.yml" down
+# docker compose down
 
 Conectar ao banco de dados mysql pela container
 # docker exec -it mysql bash
