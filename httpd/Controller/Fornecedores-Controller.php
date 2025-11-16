@@ -1,6 +1,6 @@
 <?php
-require_once "../../Model/Fornecedor-Model.php";
-require_once "../../Service/Fornecedor-Service.php";
+require_once "../../Model/fornecedor-Model.php";
+require_once "../../Service/fornecedor-Service.php";
 
 
 class FornecedorController{
