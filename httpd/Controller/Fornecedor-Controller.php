@@ -1,23 +1,25 @@
 <?php
-require_once "../../Model/fornecedor-Model.php";
-require_once "../../Service/fornecedor-Service.php";
+// ATENÇÃO: Verifique e ajuste o caminho (../) conforme a localização dos seus arquivos Model e Service
+require_once "../../Model/Fornecedor-Model.php";
+require_once "../../Service/Fornecedor-Service.php"; 
 
 
 class FornecedorController{
     private $conn;
-    private $Fornecedor;
+    private $Fornecedor; // Variável de classe no singular
 
     public function __construct() {
         $this->conn = new Conexao();
         $this->conn = $this->conn->getinstance();
-        $this->Fornecedor = new Fornecedor();
-	}
+        // Instancia a classe Fornecedores e atribui à variável $this->Fornecedor
+        $this->Fornecedor = new Fornecedores(); 
+    }
 
 
     public function registro($codigoFornecedor, $nomeFornecedor, $CNPJ, $Fax, $telefoneFixo, $telefoneCelular, $site, $logradouro, $numero, $complemento, $bairro, $cidade, $estado, $CEP){
         
-        $this->Fornecedor->__set('nomeFornecedor', $nomeFornecedor)
-            ->__set('codigoFornecedor', $codigoFornecedor)
+        $this->Fornecedor->__set('codigoFornecedor', $codigoFornecedor)
+            ->__set('nomeFornecedor', $nomeFornecedor)
             ->__set('CNPJ', $CNPJ)
             ->__set('Fax', $Fax)
             ->__set('telefoneFixo', $telefoneFixo)
@@ -29,7 +31,7 @@ class FornecedorController{
             ->__set('bairro', $bairro)
             ->__set('cidade', $cidade)
             ->__set('estado', $estado)
-            ->__set('CEP', $CEP)
+            ->__set('CEP', $CEP);
 
         $objS = new FornecedorService($this->conn, $this->Fornecedor);
         return $objS->registro();
@@ -38,7 +40,7 @@ class FornecedorController{
     public function atualiza($codigoFornecedor, $nomeFornecedor, $CNPJ, $Fax, $telefoneFixo, $telefoneCelular, $site, $logradouro, $numero, $complemento, $bairro, $cidade, $estado, $CEP){
         
         $this->Fornecedor->__set('codigoFornecedor', $codigoFornecedor)
-            ->__set('codigoFornecedor', $codigoFornecedor)
+            ->__set('nomeFornecedor', $nomeFornecedor)
             ->__set('CNPJ', $CNPJ)
             ->__set('Fax', $Fax)
             ->__set('telefoneFixo', $telefoneFixo)
@@ -50,28 +52,26 @@ class FornecedorController{
             ->__set('bairro', $bairro)
             ->__set('cidade', $cidade)
             ->__set('estado', $estado)
-            ->__set('CEP', $CEP)
+            ->__set('CEP', $CEP);
 
         $objS = new FornecedorService($this->conn, $this->Fornecedor);
         return $objS->atualiza();
     }
 
-    public function remover($codigoFornecedor){
-        $this->Fornecedor->__set('codigoFornecedor', $codigoFornecedor);
-        $objS = new FornecedorService($this->conn, $this->Fornecedor);
-        return $objS->remover();
-    }
-
-    public function buscaCodigo($codigoFornecedor){
-        $this->Fornecedor->__set('codigoFornecedor', $codigoFornecedor);
-        $objS = new FornecedorService($this->conn, $this->Fornecedor);
-        $tarefa = $objS->buscaCodigo();
-        return $tarefa['0'];
-    }
-
-    public function buscaTodos(){
+    public function buscaTodos() {
         $objS = new FornecedorService($this->conn, $this->Fornecedor);
         return $objS->buscaTodos();
     }
 
+    public function buscaCodigo($codigoFornecedor) {
+        $this->Fornecedor->__set('codigoFornecedor', $codigoFornecedor);
+        $objS = new FornecedorService($this->conn, $this->Fornecedor);
+        return $objS->buscaCodigo();
+    }
+
+    public function remover($codigoFornecedor) {
+        $this->Fornecedor->__set('codigoFornecedor', $codigoFornecedor);
+        $objS = new FornecedorService($this->conn, $this->Fornecedor);
+        return $objS->remover();
+    }
 }

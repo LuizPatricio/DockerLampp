@@ -1,5 +1,5 @@
 <?php
-class Fornecedor{
+class Fornecedores{
 
     private $codigoFornecedor;
     private $nomeFornecedor;

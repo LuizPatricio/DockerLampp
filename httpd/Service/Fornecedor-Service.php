@@ -5,7 +5,7 @@ class FornecedorService{
     private $Fornecedor; //Modelo
     private $table = "Fornecedor"; //Tabela nome...
 
-    public function __construct($conn, Fornecedor $Fornecedor){
+    public function __construct($conn, Fornecedores $Fornecedor){
         $this->conn = $conn;
         $this->Fornecedor = $Fornecedor;
     }
