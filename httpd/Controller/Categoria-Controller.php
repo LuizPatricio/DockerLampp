@@ -1,8 +1,8 @@
 <?php
 // Exemplo: /Controller/Categoria-Controller.php
 
-require_once "../../Model/Categoria-model.php";
-require_once "../../Service/Categoria-Service.php";
+require_once __DIR__ . "/../Model/Categoria-model.php";
+require_once __DIR__ . "/../Service/Categoria-Service.php";
 
 class CategoriaController {
     private $conn;

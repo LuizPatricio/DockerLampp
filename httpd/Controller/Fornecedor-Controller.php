@@ -1,7 +1,7 @@
 <?php
 // ATENÇÃO: Verifique e ajuste o caminho (../) conforme a localização dos seus arquivos Model e Service
-require_once "../../Model/Fornecedor-Model.php";
-require_once "../../Service/Fornecedor-Service.php"; 
+require_once __DIR__ . "/../Model/Fornecedor-Model.php";
+require_once __DIR__ . "/../Service/Fornecedor-Service.php";
 
 
 class FornecedorController{
