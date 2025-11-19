@@ -1,14 +1,8 @@
 <?php
-// Exemplo: /Service/Categoria-Service.php
-
-// ATENÇÃO: Verifique se o caminho da Conexao está correto!
-// require_once '../../Config/conexao.php'; 
-// require_once '../Model/Categoria.php'; 
-
 class CategoriaService {
-    private $conn; // Conexao PDO
-    private $categoria; // Objeto Modelo Categoria
-    private $table = "Categoria"; // Nome da tabela no banco de dados
+    private $conn;
+    private $categoria;
+    private $table = "Categoria";
 
     public function __construct($conn, Categoria $categoria) {
         $this->conn = $conn;
@@ -17,17 +11,67 @@ class CategoriaService {
 
     public function registro() {
         $query = "
-            INSERT INTO $this->table (nomeCategoria)
-            VALUES (?)
+            INSERT INTO $this->table (codigoCategoria, nomeCategoria)
+            VALUES (?, ?)
+        ";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(1, $this->categoria->__get('codigoCategoria'));
+        $stmt->bindValue(2, $this->categoria->__get('nomeCategoria'));
+        $stmt->execute();
+
+        $restemp = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $stmt = null;
+        return $restemp;
+    }
+
+    public function atualiza() {
+        $query = "
+            UPDATE $this->table SET
+                nomeCategoria = ?
+            WHERE
+                codigoCategoria = ?
         ";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindValue(1, $this->categoria->__get('nomeCategoria'));
-        
+        $stmt->bindValue(2, $this->categoria->__get('codigoCategoria'));
         $stmt->execute();
-        
-        // Retorna o último ID inserido
-        return $this->conn->lastInsertId();
+
+        $restemp = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $stmt = null;
+        return $restemp;
+    }
+
+    public function remover() {
+        $query = "
+            DELETE FROM $this->table 
+            WHERE codigoCategoria = ?
+        ";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(1, $this->categoria->__get('codigoCategoria'));
+        $stmt->execute();
+
+        $restemp = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $stmt = null;
+        return $restemp;
+    }
+
+    public function buscaCodigo() {
+        $query = "
+            SELECT *
+            FROM $this->table
+            WHERE codigoCategoria = ?
+        ";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(1, $this->categoria->__get('codigoCategoria'));
+        $stmt->execute();
+
+        $restemp = $stmt->fetch(PDO::FETCH_OBJ);
+        $stmt = null;
+        return $restemp;
     }
 
     public function buscaTodos() {
@@ -36,11 +80,9 @@ class CategoriaService {
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
 
-        // Retorna todos os resultados como objetos
-        return $stmt->fetchAll(PDO::FETCH_OBJ);
+        $restemp = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $stmt = null;
+        return $restemp;
     }
-    
-    // Você também pode adicionar métodos para atualiza, remover e buscaCodigo aqui.
 }
-
 ?>

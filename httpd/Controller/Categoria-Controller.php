@@ -1,46 +1,50 @@
 <?php
 // Exemplo: /Controller/Categoria-Controller.php
 
-include_once("../../Config/conexao.php");
-include_once("../Model/Categoria.php");
-include_once("../Service/Categoria-Service.php");
+require_once "../../Model/Categoria-model.php";
+require_once "../../Service/Categoria-Service.php";
 
 class CategoriaController {
-    private $service;
-    private $modelo;
+    private $conn;
+    private $Categoria;
 
     public function __construct() {
-        $conexao = new Conexao();
-        $this->modelo = new Categoria();
-        $this->service = new CategoriaService($conexao->conectar(), $this->modelo);
+        $this->conn = new Conexao();
+        $this->conn = $this->conn->getinstance();
+        $this->Categoria = new Categoria();
     }
 
-    public function registro($nome) {
-        $this->modelo->__set('nomeCategoria', $nome);
-        return $this->service->registro();
+    public function registro($codigoCategoria, $nomeCategoria) {
+        $this->Categoria->__set('codigoCategoria', $codigoCategoria)
+                        ->__set('nomeCategoria', $nomeCategoria);
+        
+        $objS = new CategoriaService($this->conn, $this->Categoria);
+        return $objS->registro();
+    }
+
+    public function atualiza($codigoCategoria, $nomeCategoria) {
+        $this->Categoria->__set('codigoCategoria', $codigoCategoria)
+                        ->__set('nomeCategoria', $nomeCategoria);
+        
+        $objS = new CategoriaService($this->conn, $this->Categoria);
+        return $objS->atualiza();
     }
 
     public function buscaTodos() {
-        return $this->service->buscaTodos();
+        $objS = new CategoriaService($this->conn, $this->Categoria);
+        return $objS->buscaTodos();
     }
-    
-    // Métodos para atualizar, remover, etc., que você deve adicionar.
-}
 
-// ----------------------------------------------------
-// Lógica de Roteamento (como nos seus outros controllers)
-// ----------------------------------------------------
+    public function buscaCodigo($codigoCategoria) {
+        $this->Categoria->__set('codigoCategoria', $codigoCategoria);
+        $objS = new CategoriaService($this->conn, $this->Categoria);
+        return $objS->buscaCodigo();
+    }
 
-$controller = new CategoriaController();
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['nomeCategoria'])) {
-        $controller->registro($_POST['nomeCategoria']);
-        print "<div class=\"alert alert-success text-center \" role=\"alert\">Categoria cadastrada com sucesso!!</div>";
-    } else {
-        print "<div class=\"alert alert-danger text-center \" role=\"alert\">A Categoria não pode ser cadastrada!!</div>";
+    public function remover($codigoCategoria) {
+        $this->Categoria->__set('codigoCategoria', $codigoCategoria);
+        $objS = new CategoriaService($this->conn, $this->Categoria);
+        return $objS->remover();
     }
 }
-// Adicione a lógica para GET (listar), PUT (atualizar) e DELETE (remover) aqui.
-
 ?>
